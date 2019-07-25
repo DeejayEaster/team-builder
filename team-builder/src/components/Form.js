@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Cards from "./Cards";
 
-export default function Form() {
+export default function Form(props) {
   const [user, setUser] = useState({ username: "", email: "", role: "" });
+  const [display, setDisplay] = useState([]);
 
   function handleChange(event) {
     const updatedUser = { ...user, [event.target.name]: event.target.value };
@@ -19,25 +20,30 @@ export default function Form() {
   //   setUser({ email: event.target.value });
   // }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log("user state", user);
-  }
-
   return (
     <>
-      <Cards />
-      <form onSubmit={event => handleSubmit(event)}>
+      <Cards props={props} />
+      <form
+        onSubmit={event => {
+          event.preventDefault();
+          props.submit(user);
+          setUser({
+            name: "",
+            email: "",
+            role: ""
+          });
+        }}
+      >
         <fieldset>
           <legend>Signup</legend>
           <div className="form-group row">
             <label for="username" className="col-sm-2 col-form-label">
               Username
-              <div className="col-sm-10">
+              <div className="inputs">
                 <input
                   type="text"
                   className="form-control"
-                  name="username"
+                  name="name"
                   placeholder="Enter your username"
                   value={user.username}
                   onChange={handleChange}
@@ -58,7 +64,7 @@ export default function Form() {
             />
           </div>
           <div className="form-group">
-            <label for="exampleInputPassword1">Role</label>
+            <label for="role">Role</label>
             <input
               type="text"
               className="form-control"
