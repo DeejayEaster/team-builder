@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Card from "./components/Card.js";
 import Form from "./components/Form.js";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, Router } from "react-router-dom";
 
 function App() {
   const [people, setPeople] = useState([

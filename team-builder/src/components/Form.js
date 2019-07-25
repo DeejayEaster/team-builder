@@ -1,114 +1,45 @@
 import React, { useState } from "react";
-import Cards from "./Cards";
 
-export default function Form(props) {
-  const [user, setUser] = useState({ username: "", email: "", role: "" });
-  const [display, setDisplay] = useState([]);
-
-  function handleChange(event) {
-    const updatedUser = { ...user, [event.target.name]: event.target.value };
-    // console.log(
-    //   "handleChange",
-    //   event.target.name,
-    //   event.target.value,
-    //   updatedUser
-    // );
-    setUser(updatedUser);
-  }
-  // function handleEmail(event) {
-  //   console.log("changed Email", event.target.value);
-  //   setUser({ email: event.target.value });
-  // }
-
-  return (
-    <>
-      <Cards props={props} />
-      <form
-        onSubmit={event => {
-          event.preventDefault();
-          props.submit(user);
-          setUser({
-            name: "",
-            email: "",
-            role: ""
-          });
-        }}
-      >
-        <fieldset>
-          <legend>Signup</legend>
-          <div className="form-group row">
-            <label for="username" className="col-sm-2 col-form-label">
-              Username
-              <div className="inputs">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  placeholder="Enter your username"
-                  value={user.username}
-                  onChange={handleChange}
-                />
-              </div>
-            </label>
-          </div>
-          <div className="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-              value={user.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label for="role">Role</label>
-            <input
-              type="text"
-              className="form-control"
-              name="role"
-              placeholder="role"
-              onChange={handleChange}
-              value={user.role}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </fieldset>
-      </form>
-    </>
+const Form = props => {
+  console.log(props);
+  // const setPeople = props.setPeople;
+  const { submitPerson, initialPerson, buttonText, history } = props;
+  // const [person, setPerson] = useState({name: "", email: "", role: ""});
+  const [person, setPerson] = useState(
+    initialPerson || { name: "", email: "", role: "" }
   );
-}
+  const handleChange = event => {
+    setPerson({ ...person, [event.target.name]: event.target.value });
+  };
+  const handleSubmit = event => {
+    event.preventDefault();
+    submitPerson(person);
+    setPerson({ name: "", email: "", role: "" });
+    history.push("/");
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        placeholder="name"
+        value={person.name}
+        name="name"
+        onChange={handleChange}
+      />
+      <input
+        placeholder="email"
+        value={person.email}
+        name="email"
+        onChange={handleChange}
+      />
+      <input
+        placeholder="role"
+        value={person.role}
+        name="role"
+        onChange={handleChange}
+      />
+      <button type="submit">{buttonText}</button>
+    </form>
+  );
+};
 
-/* 
-const TeamMembers = [
-  {
-    name: "Kevin",
-    email: "KevinRulzURface666@Bmail.com",
-    role: "CEO"
-  },
-  {
-    name: "Timmy",
-    email: "TimmyRulzURface666@Bmail.com",
-    role: "CTO"
-  },
-  {
-    name: "Janet",
-    email: "janet.barret@gmail.com",
-    role: "IT Manager"
-  },
-  {
-    name: "Kevin T.",
-    email: "KevinTRulzURface666@Bmail.com",
-    role: "Janitor"
-  },
-  {
-    name: "Bob Sachel",
-    email: "BOBRulzURface666@Bmail.com",
-    role: "Full Stack Developer"
-  }
-];
-*/
+export default Form;
