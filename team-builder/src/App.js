@@ -6,8 +6,8 @@ import { Route, Link, Router } from "react-router-dom";
 
 function App() {
   const [people, setPeople] = useState([
-    { id: 0, name: "Henry", email: "nice@try", role: "TL" },
-    { id: 1, name: "Bard", email: "not@this", role: "Dad" }
+    { id: 0, name: "DJ", email: "nice@try", role: "CEO of Earth" },
+    { id: 1, name: "You", email: "not@this", role: "the janitor" }
   ]);
 
   const addPerson = person => {
